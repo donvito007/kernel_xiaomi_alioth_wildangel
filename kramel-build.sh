@@ -41,7 +41,7 @@ cd ../
 				LOCALVERSION=-${TANGGAL} \
 				CROSS_COMPILE_ARM32=arm-eabi- \
 				CROSS_COMPILE=aarch64-elf- \
-				LD=aarch64-elf-ld.bfd 2>&1 | tee build.log
+				LD=aarch64-elf-ld.lld 2>&1 | tee build.log
 
 END=$(date +"%s")
 DIFF=$((END - START))
