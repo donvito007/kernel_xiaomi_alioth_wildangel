@@ -13,7 +13,10 @@ export ARCH=arm64
 export SUBARCH=arm64
 export KBUILD_BUILD_HOST="cyber"
 export KBUILD_BUILD_USER="ricoayuba"
-export chat_id="-1001608547174"
+#main group
+export chat_id="-1001726996867"
+#channel
+export chat_id2="-1001608547174"
 export DEF="vendor/alioth_defconfig"
 TC_DIR=${PWD}
 GCC64_DIR="${PWD}/gcc64"
@@ -69,6 +72,9 @@ cp ${DTB} $(pwd)/AnyKernel3
         curl -s -X POST "https://api.telegram.org/bot$TOKEN/sendSticker" \
         -d sticker="CAACAgUAAxkBAAJi017AAw5j25_B3m8IP-iy98ffcGHZAAJAAgACeV4XIusNfRHZD3hnGQQ" \
         -d chat_id="$chat_id"
+	
+	curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage -d text="hi guys, the latest update is available on @HyperX_Archive !" -d chat_id=${chat_id2} -d parse_mode=HTML
+
 cd ..
 else
         curl -F chat_id="${chat_id}"  \
