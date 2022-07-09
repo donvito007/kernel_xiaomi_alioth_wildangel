@@ -55,6 +55,11 @@ enum {
 	HW_PLATFORM_STP = 23,
 	HW_PLATFORM_SBC = 24,
 
+#ifdef CONFIG_BOARD_XIAOMI_SM7250
+	HW_PLATFORM_J9A = 35,
+	HW_PLATFORM_G7A = 36,
+	HW_PLATFORM_J9  = 37,
+#endif
 	HW_PLATFORM_J1  = 36,
 	HW_PLATFORM_J11 = 37,
 	HW_PLATFORM_J1S = 41,
@@ -64,6 +69,7 @@ enum {
 	HW_PLATFORM_J2S = 45,
 	HW_PLATFORM_K81 = 46,
 	HW_PLATFORM_K81A = 47,
+	HW_PLATFORM_L3A = 48,
 	HW_PLATFORM_HDK = 31,
 	HW_PLATFORM_IDP = 34,
 	HW_PLATFORM_INVALID
@@ -95,6 +101,12 @@ const char *hw_platform[] = {
 	[HW_PLATFORM_J2S] = "THYME",
 	[HW_PLATFORM_K81] = "ENUMA",
 	[HW_PLATFORM_K81A] = "ELISH",
+	[HW_PLATFORM_L3A] = "PSYCHE",
+#ifdef CONFIG_BOARD_XIAOMI_SM7250
+	[HW_PLATFORM_J9A] = "VANGOGH",
+	[HW_PLATFORM_G7A] = "PICASSO",
+	[HW_PLATFORM_J9]  = "MONET",
+#endif
 	[HW_PLATFORM_HDK] = "HDK",
 	[HW_PLATFORM_IDP] = "IDP"
 };
@@ -357,6 +369,12 @@ static struct msm_soc_info cpu_of_id[] = {
 
 	/* Khaje ID */
 	[518] = {MSM_CPU_KHAJE, "KHAJE"},
+
+	/* Khajep ID */
+	[561] = {MSM_CPU_KHAJEP, "KHAJEP"},
+
+	/* Khajeq ID */
+	[562] = {MSM_CPU_KHAJEQ, "KHAJEQ"},
 
 	/* Lagoon ID */
 	[434] = {MSM_CPU_LAGOON, "LAGOON"},
@@ -1288,6 +1306,14 @@ static void * __init setup_dummy_socinfo(void)
 		dummy_socinfo.id = 518;
 		strlcpy(dummy_socinfo.build_id, "khaje - ",
 		sizeof(dummy_socinfo.build_id));
+	} else if (early_machine_is_khajep()) {
+		dummy_socinfo.id = 561;
+		strlcpy(dummy_socinfo.build_id, "khajep - ",
+		sizeof(dummy_socinfo.build_id));
+	} else if (early_machine_is_khajeq()) {
+		dummy_socinfo.id = 562;
+		strlcpy(dummy_socinfo.build_id, "khajeq - ",
+		sizeof(dummy_socinfo.build_id));
 	} else if (early_machine_is_bengalp()) {
 		dummy_socinfo.id = 445;
 		strlcpy(dummy_socinfo.build_id, "bengalp - ",
@@ -1734,22 +1760,32 @@ uint32_t get_hw_version_platform(void)
 	uint32_t hw_type = socinfo_get_platform_type();
 	if (hw_type == HW_PLATFORM_J2)
 		return HARDWARE_PLATFORM_UMI;
-	if (hw_type == HW_PLATFORM_J1)
+	else if (hw_type == HW_PLATFORM_J1)
 		return HARDWARE_PLATFORM_CMI;
-	if (hw_type == HW_PLATFORM_J11)
+	else if (hw_type == HW_PLATFORM_J11)
 		return HARDWARE_PLATFORM_LMI;
-	if (hw_type == HW_PLATFORM_J1S)
+	else if (hw_type == HW_PLATFORM_J1S)
 		return HARDWARE_PLATFORM_CAS;
-	if (hw_type == HW_PLATFORM_J3S)
+	else if (hw_type == HW_PLATFORM_J3S)
 		return HARDWARE_PLATFORM_APOLLO;
-	if (hw_type == HW_PLATFORM_K11A)
+	else if (hw_type == HW_PLATFORM_K11A)
 		return HARDWARE_PLATFORM_ALIOTH;
-	if (hw_type == HW_PLATFORM_K81)
-		return HARDWARE_PLATFORM_ENUMA;
-	if (hw_type == HW_PLATFORM_K81A)
-		return HARDWARE_PLATFORM_ELISH;
-        if (hw_type == HW_PLATFORM_J2S)
+        else if (hw_type == HW_PLATFORM_J2S)
                 return HARDWARE_PLATFORM_THYME;
+	else if (hw_type == HW_PLATFORM_K81)
+		return HARDWARE_PLATFORM_ENUMA;
+	else if (hw_type == HW_PLATFORM_K81A)
+		return HARDWARE_PLATFORM_ELISH;
+        else if (hw_type == HW_PLATFORM_L3A)
+                return HARDWARE_PLATFORM_PSYCHE;
+#ifdef CONFIG_BOARD_XIAOMI_SM7250
+	else if (hw_type == HW_PLATFORM_J9A)
+		return HARDWARE_PLATFORM_VANGOGH;
+	else if (hw_type == HW_PLATFORM_G7A)
+		return HARDWARE_PLATFORM_PICASSO;
+	else if (hw_type == HW_PLATFORM_J9)
+		return HARDWARE_PLATFORM_MONET;
+#endif
 	else
 		return HARDWARE_PLATFORM_UNKNOWN;
 }
