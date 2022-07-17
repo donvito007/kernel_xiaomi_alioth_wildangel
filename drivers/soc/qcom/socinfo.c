@@ -55,11 +55,6 @@ enum {
 	HW_PLATFORM_STP = 23,
 	HW_PLATFORM_SBC = 24,
 
-#ifdef CONFIG_BOARD_XIAOMI_SM7250
-	HW_PLATFORM_J9A = 35,
-	HW_PLATFORM_G7A = 36,
-	HW_PLATFORM_J9  = 37,
-#endif
 	HW_PLATFORM_J1  = 36,
 	HW_PLATFORM_J11 = 37,
 	HW_PLATFORM_J1S = 41,
@@ -69,7 +64,6 @@ enum {
 	HW_PLATFORM_J2S = 45,
 	HW_PLATFORM_K81 = 46,
 	HW_PLATFORM_K81A = 47,
-	HW_PLATFORM_L3A = 48,
 	HW_PLATFORM_HDK = 31,
 	HW_PLATFORM_IDP = 34,
 	HW_PLATFORM_INVALID
@@ -101,12 +95,6 @@ const char *hw_platform[] = {
 	[HW_PLATFORM_J2S] = "THYME",
 	[HW_PLATFORM_K81] = "ENUMA",
 	[HW_PLATFORM_K81A] = "ELISH",
-	[HW_PLATFORM_L3A] = "PSYCHE",
-#ifdef CONFIG_BOARD_XIAOMI_SM7250
-	[HW_PLATFORM_J9A] = "VANGOGH",
-	[HW_PLATFORM_G7A] = "PICASSO",
-	[HW_PLATFORM_J9]  = "MONET",
-#endif
 	[HW_PLATFORM_HDK] = "HDK",
 	[HW_PLATFORM_IDP] = "IDP"
 };
@@ -1760,32 +1748,22 @@ uint32_t get_hw_version_platform(void)
 	uint32_t hw_type = socinfo_get_platform_type();
 	if (hw_type == HW_PLATFORM_J2)
 		return HARDWARE_PLATFORM_UMI;
-	else if (hw_type == HW_PLATFORM_J1)
+	if (hw_type == HW_PLATFORM_J1)
 		return HARDWARE_PLATFORM_CMI;
-	else if (hw_type == HW_PLATFORM_J11)
+	if (hw_type == HW_PLATFORM_J11)
 		return HARDWARE_PLATFORM_LMI;
-	else if (hw_type == HW_PLATFORM_J1S)
+	if (hw_type == HW_PLATFORM_J1S)
 		return HARDWARE_PLATFORM_CAS;
-	else if (hw_type == HW_PLATFORM_J3S)
+	if (hw_type == HW_PLATFORM_J3S)
 		return HARDWARE_PLATFORM_APOLLO;
-	else if (hw_type == HW_PLATFORM_K11A)
+	if (hw_type == HW_PLATFORM_K11A)
 		return HARDWARE_PLATFORM_ALIOTH;
-        else if (hw_type == HW_PLATFORM_J2S)
-                return HARDWARE_PLATFORM_THYME;
-	else if (hw_type == HW_PLATFORM_K81)
+	if (hw_type == HW_PLATFORM_K81)
 		return HARDWARE_PLATFORM_ENUMA;
-	else if (hw_type == HW_PLATFORM_K81A)
+	if (hw_type == HW_PLATFORM_K81A)
 		return HARDWARE_PLATFORM_ELISH;
-        else if (hw_type == HW_PLATFORM_L3A)
-                return HARDWARE_PLATFORM_PSYCHE;
-#ifdef CONFIG_BOARD_XIAOMI_SM7250
-	else if (hw_type == HW_PLATFORM_J9A)
-		return HARDWARE_PLATFORM_VANGOGH;
-	else if (hw_type == HW_PLATFORM_G7A)
-		return HARDWARE_PLATFORM_PICASSO;
-	else if (hw_type == HW_PLATFORM_J9)
-		return HARDWARE_PLATFORM_MONET;
-#endif
+        if (hw_type == HW_PLATFORM_J2S)
+                return HARDWARE_PLATFORM_THYME;
 	else
 		return HARDWARE_PLATFORM_UNKNOWN;
 }
