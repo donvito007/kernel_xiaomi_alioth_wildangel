@@ -25,6 +25,7 @@
 #include <trace/events/sched.h>
 
 #include "walt.h"
+#include "features.h"
 
 #ifdef CONFIG_SMP
 static inline bool task_fits_max(struct task_struct *p, int cpu);
